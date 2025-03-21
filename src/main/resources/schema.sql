@@ -1,0 +1,29 @@
+CREATE SEQUENCE payment_seq START WITH 1 INCREMENT BY 50;
+
+CREATE TABLE payment (
+  id INTEGER NOT NULL DEFAULT NEXTVAL('payment_seq'),
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  zip_code VARCHAR(255) NOT NULL,
+  card_number VARCHAR(255) NOT NULL,
+  amount INTEGER NOT NULL,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE web_hook (
+  url VARCHAR(255) NOT NULL,
+  PRIMARY KEY (url)
+);
+
+CREATE SEQUENCE notification_seq START WITH 1 INCREMENT BY 50;
+
+CREATE TABLE notification (
+  id INTEGER NOT NULL DEFAULT NEXTVAL('notification_seq'),
+  payment_id INTEGER NOT NULL,
+  url VARCHAR(255) NOT NULL,
+  retries INTEGER NOT NULL DEFAULT 0,
+  create_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  process_timestamp TIMESTAMP,
+  PRIMARY KEY (id)
+);

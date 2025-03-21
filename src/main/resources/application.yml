@@ -1,0 +1,21 @@
+application:
+  notification:
+    retry.seconds: 10
+    max.retries: 3
+
+spring:
+  application.name: ezycollect-demo
+  config:
+    activate:
+      on-profile: dev
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      format_sql: true
+
+  task:
+    scheduling:
+      thread-name-prefix: "scheduling-"
+      pool:
+        size: 2

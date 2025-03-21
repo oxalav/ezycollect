@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Payment Demo API
+  description: API for handling payments and Web hook registrations
+  version: 1.0.0
+paths:
+  /api/v1/payment:
+    post:
+      summary: Create a new payment
+      description: Accepts a payment object and creates a new payment entry in the database.
+      operationId: createPayment
+      requestBody:
+        description: Payment object that needs to be created.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+      responses:
+        '200':
+          description: Payment successfully processed
+          content:
+            application/json:
+              schema:
+                type: string
+                example: 'Saved'
+        '400':
+          description: Invalid fields in the payment object
+          content:
+            application/json:
+              schema:
+                type: string
+                example: 'Invalid fields: field1, field2'
+  /api/v1/webhook/register:
+    post:
+      summary: Register a new Web hook
+      description: Registers a new URL for Web hook notifications.
+      operationId: registerWebHook
+      parameters:
+        - in: query
+          name: url
+          required: true
+          schema:
+            type: string
+          description: The URL to register for Web hook notifications.
+      responses:
+        '200':
+          description: Web hook successfully registered
+          content:
+            application/json:
+              schema:
+                type: string
+                example: 'Registered'
+  /api/v1/webhook/unregister:
+    post:
+      summary: Unregister an existing Web hook
+      description: Removes a Web hook URL from the system.
+      operationId: unregisterWebHook
+      parameters:
+        - in: query
+          name: url
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Web hook successfully unregistered
+          content:
+            application/json:
+              schema:
+                type: string
+                example: 'Registered'
+        '400':
+          description: Web hook could not be unregistered
+          content:
+            application/json:
+              schema:
+                type: string
+                example: 'Not found'
